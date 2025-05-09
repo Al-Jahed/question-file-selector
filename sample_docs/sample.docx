@@ -1,15 +1,3 @@
-from docx import Document
-import os
-
-os.makedirs("sample_docs", exist_ok=True)
-
-doc1 = Document()
-doc1.add_heading("Topic 1 Content", level=1)
-doc1.add_paragraph("This is the content of English 2025 Topic 1.")
-doc1.save("sample_docs/Topic1.docx")
-
-doc2 = Document()
-doc2.add_heading("ICT MCQ Set", level=1)
-doc2.add_paragraph("These are some sample MCQ questions for ICT 2026.")
-doc2.save("sample_docs/MCQ_Set.docx")
-
+Student life is the best time for (a) --- (prepare) ourself for future. It is (b) ---- (call) the seed time of life. So during this period of life students mustn't (c) --- (waste) time. The main pursuit of the students (d) ---  (be) study. They should prepare themselves for the life (e) --- (lie) ahead. They should also (f) --- (participate) in co-curricular activities. By (g) --- (read) newspaper they will know what (h) --- (happen) in the world. When the country (i) --- (face) with a natural calamity, they should (j) --- (come) forward with a view to (k) --- (remove) the sufferings of the affected people. Even in normal times they (l) --- (engage) themselves in acts of social service. The students can not do well in the examination without (m) --- (work) hard. It is a pity that many students are trying to (n) --- (succeed) in the shortest and easiest way.
+If all the children (a) ---- (go) to school, the country (b) —- (get) rid of the curse of illiteracy. To boost up  education, the govt. (c) --- (spend) more money. Subsidies must (d) —– (give) in the education sector. Teachers (e) --- (need) to (f) --- (train) for good teaching. The poor students can (g) --- (bring) under ‘Food for Education’ programme. We (h) --- (take) care that no institution (i) --- (close) down due to political clashes. All concerned (j) --- (be) conscious about it. If we cannot (k) --- (keep) pace with the present world, we (l) --- (lag) behind. For this we have to (m) --- (ensure) education for all and set a bright prospect for (n) --- (implement) all necessary steps.
+Newspaper (a) --- (consider) the people’s parliament. The Newspaper (b) --- (play) a vital role in the modern Civilization. It (c) --- (call) to be the mirror of the world. We must (d) --- (develop) the habit of (e) --- (read) newspapers daily. It helps us (f) --- (acquire) knowledge, which (g) --- (be) essential for our education. Nobody (h) --- (maintain) contact with the outside world without reading the newspaper. Mere bookish knowledge (i) --- (be) not sufficient in the struggle of life. A man who (j) --- (read) newspaper daily (k) --- (be) a creature of a narrow well. Being ignorant of current topics, he cannot (l) --- (take) part in talks and discussions in enlightened society and he (m) --- (live) like a fish out of water in it. Students (n) --- (ask) for reading newspaper daily.
