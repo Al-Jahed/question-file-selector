@@ -1,1 +1,15 @@
+from docx import Document
+import os
+
+os.makedirs("sample_docs", exist_ok=True)
+
+doc1 = Document()
+doc1.add_heading("Topic 1 Content", level=1)
+doc1.add_paragraph("This is the content of English 2025 Topic 1.")
+doc1.save("sample_docs/Topic1.docx")
+
+doc2 = Document()
+doc2.add_heading("ICT MCQ Set", level=1)
+doc2.add_paragraph("These are some sample MCQ questions for ICT 2026.")
+doc2.save("sample_docs/MCQ_Set.docx")
 
