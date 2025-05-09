@@ -1,55 +1,54 @@
 import streamlit as st
-import pandas as pd
 from docx import Document
 import os
+import tempfile
 
-@st.cache_data
-def load_index():
-    return pd.read_csv("index.csv")
+st.title("📁 Upload & Combine DOCX Files")
 
-df = load_index()
+# Initialize selected files list
+if 'uploaded_files' not in st.session_state:
+    st.session_state.uploaded_files = []
 
-st.title("📁 Question File Selector & Combiner")
+uploaded_file = st.file_uploader("Upload a .docx file", type="docx")
 
-code = st.text_input("Enter file code")
-if 'selected_files' not in st.session_state:
-    st.session_state.selected_files = []
+if uploaded_file is not None:
+    # Save to a temp file
+    temp_dir = tempfile.gettempdir()
+    file_path = os.path.join(temp_dir, uploaded_file.name)
+    with open(file_path, "wb") as f:
+        f.write(uploaded_file.read())
 
-if st.button("Add"):
-    match = df[df['code'] == code.strip()]
-    if not match.empty:
-        file_info = match.iloc[0].to_dict()
-        if file_info not in st.session_state.selected_files:
-            st.session_state.selected_files.append(file_info)
-    else:
-        st.warning("Code not found in index.")
+    # Store file info
+    st.session_state.uploaded_files.append({
+        "filename": uploaded_file.name,
+        "filepath": file_path
+    })
+    st.success(f"✅ Uploaded: {uploaded_file.name}")
 
-st.write("### ✅ Selected Files")
-for i, item in enumerate(st.session_state.selected_files):
+# Display selected files
+st.subheader("✅ Selected Files")
+for i, file in enumerate(st.session_state.uploaded_files):
     col1, col2 = st.columns([4, 1])
-    col1.write(f"{item['filename']}")
+    col1.write(file["filename"])
     if col2.button("❌ Remove", key=f"remove_{i}"):
-        st.session_state.selected_files.pop(i)
+        st.session_state.uploaded_files.pop(i)
         st.experimental_rerun()
 
-if st.button("Generate") and st.session_state.selected_files:
+# Generate combined docx
+if st.button("Generate") and st.session_state.uploaded_files:
     output_doc = Document()
-    for item in st.session_state.selected_files:
-        path = item['filepath']
-        if os.path.exists(path):
-            if path.endswith(".docx"):
-                sub_doc = Document(path)
-                for para in sub_doc.paragraphs:
-                    output_doc.add_paragraph(para.text)
-            elif path.endswith(".txt"):
-                with open(path, 'r', encoding='utf-8') as f:
-                    output_doc.add_paragraph(f.read())
-        else:
-            st.error(f"File not found: {path}")
+    for file in st.session_state.uploaded_files:
+        try:
+            sub_doc = Document(file["filepath"])
+            output_doc.add_paragraph(f"--- {file['filename']} ---")
+            for para in sub_doc.paragraphs:
+                output_doc.add_paragraph(para.text)
+        except Exception as e:
+            st.error(f"Error reading {file['filename']}: {e}")
 
-    save_path = "combined_output.docx"
-    output_doc.save(save_path)
-    st.success(f"✔️ Document generated: {save_path}")
-    with open(save_path, "rb") as f:
+    output_path = os.path.join(tempfile.gettempdir(), "combined_output.docx")
+    output_doc.save(output_path)
+
+    st.success("🎉 Combined document generated!")
+    with open(output_path, "rb") as f:
         st.download_button("📥 Download Combined DOCX", f, file_name="combined_output.docx")
-
